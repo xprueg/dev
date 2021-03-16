@@ -2,12 +2,83 @@
 <html>
   <head>
     <title>Cardmarket Photo Generator</title>
+    <style>
+      html {
+        font-size: 14px;
+        background: gainsboro;
+        font-family: system-ui;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+
+      .ui {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .ui > * {
+        flex-basis: calc(100% / 3);
+      }
+
+      .file_inputs {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .file_inputs label {
+        flex-basis: calc(100% / 2);
+        background: white;
+        border-radius: .5rem;
+      }
+
+      label, button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }      
+
+      button {
+        margin: 1rem 0;
+        background: black;
+        color: white;
+        border: none;
+        border-radius: .5rem;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <input data-left-image type="file"></input>
-    <input data-right-image type="file"></input>
-    <button>Generate</button>
-    <canvas></canvas>
+    <div class="ui">
+      <div class="file_inputs">
+        <label>
+          <input data-left-image type="file"></input>
+          File Left
+        </label>
+        <label>
+          <input data-right-image type="file"></input>
+          File Right
+        </label>
+      </div>
+      <button>Generate</button>
+      <canvas></canvas>
+    </div>
     <script>
       const pic_size = {
         width: 3024 / 10,
