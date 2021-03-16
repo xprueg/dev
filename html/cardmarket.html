@@ -4,7 +4,9 @@
     <title>Cardmarket Photo Generator</title>
   </head>
   <body>
-    <input type="file" multiple></input>
+    <input data-left-image type="file"></input>
+    <input data-right-image type="file"></input>
+    <button>Generate</button>
     <canvas></canvas>
     <script>
       const pic_size = {
@@ -27,8 +29,12 @@
         img.src = url;
       };
 
-      document.querySelector("input").addEventListener("change", ((evt) => {
-        const files = evt.target.files;
+      document.querySelector("button").addEventListener("click", ((_) => {
+        const files = [
+          document.querySelector("input[data-left-image]").files[0],
+          document.querySelector("input[data-right-image]").files[0]
+        ];
+        
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d", {alpha: false});
 
