@@ -129,8 +129,6 @@
           blob_to_img(files[1], (img) => {
             ctx.drawImage(img, canvas.width / 2, 0, pic_size.width, pic_size.height);
 
-            ctx.fillStlye = "black";
-            ctx.fillRect(canvas_size.width / 2, 0, canvas_size.width * .05, canvas_size.height);
             ctx.fillStyle = "white";
             ctx.font = "16px system-ui";
             ctx.textBaseline = "bottom";
@@ -141,7 +139,7 @@
               canvas_size.height * .98
             );
 
-            document.querySelector("img[data-output]").src = canvas.toDataURL();
+            document.querySelector("img[data-output]").src = canvas.toDataURL("image/jpg", 1);
           });
         });
       }));
