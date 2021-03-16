@@ -53,8 +53,12 @@
         align-items: center;
       }     
 
-      canvas {
+      img {
         max-height: 70vh;
+      }
+
+      canvas {
+        display: none;;
       }
 
       button {
@@ -83,12 +87,13 @@
         </label>
       </div>
       <button>Generate</button>
-      <canvas></canvas>
+      <img data-output/>
     </div>
+    <canvas></canvas>
     <script>
       const pic_size = {
-        width: 3024 / 10,
-        height: 4032 / 10,
+        width: 3024 / 5,
+        height: 4032 / 5,
       };
 
       const canvas_size = {
@@ -123,6 +128,20 @@
 
           blob_to_img(files[1], (img) => {
             ctx.drawImage(img, canvas.width / 2, 0, pic_size.width, pic_size.height);
+
+            ctx.fillStlye = "black";
+            ctx.fillRect(canvas_size.width / 2, 0, canvas_size.width * .05, canvas_size.height);
+            ctx.fillStyle = "white";
+            ctx.font = "16px system-ui";
+            ctx.textBaseline = "bottom";
+            const txt = "cardmarket.com/en/YuGiOh/Users/ptrckr";
+            ctx.fillText(
+              txt,
+              canvas_size.width / 2 - ctx.measureText(txt).width / 2,
+              canvas_size.height * .98
+            );
+
+            document.querySelector("img[data-output]").src = canvas.toDataURL();
           });
         });
       }));
