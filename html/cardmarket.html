@@ -4,6 +4,45 @@
     <title>Cardmarket Photo Generator</title>
   </head>
   <body>
-    %body
+    <input type="file" multiple></input>
+    <canvas></canvas>
+    <script>
+      const pic_size = {
+        width: 3024 / 10,
+        height: 4032 / 10,
+      };
+
+      const canvas_size = {
+        width: pic_size.width * 2,
+        height: pic_size.height,
+      };
+
+      const blob_to_img = (blob, callback) => {
+        const img = new Image();
+        const url = URL.createObjectURL(blob);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          callback(img);
+        }
+        img.src = url;
+      };
+
+      document.querySelector("input").addEventListener("change", ((evt) => {
+        const files = evt.target.files;
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d", {alpha: false});
+
+        ctx.width = canvas.width = canvas_size.width;
+        ctx.height = canvas.height = canvas_size.height;
+
+        blob_to_img(files[0], (img) => {
+          ctx.drawImage(img, 0, 0, pic_size.width, pic_size.height);
+
+          blob_to_img(files[1], (img) => {
+            ctx.drawImage(img, canvas.width / 2, 0, pic_size.width, pic_size.height);
+          });
+        });
+      }));
+    </script> 
   </body>
 </html>
