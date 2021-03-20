@@ -129,15 +129,18 @@
           blob_to_img(files[1], (img) => {
             ctx.drawImage(img, canvas.width / 2, 0, pic_size.width, pic_size.height);
 
+            const text = prompt() || "xpr.org";
+            const x = canvas_size.width / 2 - ctx.measureText(text).width / 2;
+            const y = canvas_size.height * .98;
+
             ctx.fillStyle = "white";
-            ctx.font = "16px system-ui";
+            ctx.strokeStyle = 'black';
+            ctx.font = `${canvas_size.height * .015}px system-ui`;
             ctx.textBaseline = "bottom";
-            const txt = "cardmarket.com/en/YuGiOh/Users/ptrckr";
-            ctx.fillText(
-              txt,
-              canvas_size.width / 2 - ctx.measureText(txt).width / 2,
-              canvas_size.height * .98
-            );
+            ctx.lineWidth = canvas_size.heihgt * .004;
+
+            ctx.strokeText(text, x, y);
+            ctx.fillText(text, x, y);
 
             document.querySelector("img[data-output]").src = canvas.toDataURL("image/jpeg", 1);
           });
