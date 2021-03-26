@@ -71,10 +71,35 @@ function setup_canvas(captures, canvas, ctx) {
     canvas.height = ctx.height = h;
 }
 
-function render_images(captures, canvas, ctx) {
+function render_images(captures, ctx) {
     ctx.drawImage(captures.left, captures.left.calculated.x, captures.left.calculated.y, captures.left.calculated.w, captures.left.calculated.h);
     ctx.drawImage(captures.right, captures.right.calculated.x, captures.right.calculated.y, captures.right.calculated.w, captures.right.calculated.h);
 }
+
+document.querySelector("[copyright]").addEventListener("click", () => {
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d", { alpha: false });
+    const text = prompt("Copyright Text?") || "XPR.ORG";
+
+    ctx.fillStyle = "rgba(255, 255, 255, .3)";
+    ctx.font = `${ctx.height * .04}px system-ui`;
+    ctx.textBaseline = "middle";
+    const tm = ctx.measureText(text);
+
+    const width = Math.abs(tm.actualBoundingBoxLeft) + Math.abs(tm.actualBoundingBoxRight);
+    const height = Math.abs(tm.actualBoundingBoxAscent) + Math.abs(tm.actualBoundingBoxDescent);
+
+    let x = ctx.width / 2 - width / 2;
+    const y = ctx.height / 2 - (height) / 2;
+
+    while(x > 0) x -= width * 1.25;
+    while(x < ctx.width) {
+        x += width * 1.25;
+        ctx.fillText(text, x, y);
+    };
+
+    document.querySelector("img").src = canvas.toDataURL("image/jpeg", 1);
+});
 
 function paint_canvas(nodes) {
     const canvas = document.querySelector("canvas");
@@ -82,7 +107,7 @@ function paint_canvas(nodes) {
     const captures = extract_captures(nodes);
 
     setup_canvas(captures, canvas, ctx);
-    render_images(captures, canvas, ctx);
+    render_images(captures, ctx);
 
     document.querySelector("img").src = canvas.toDataURL("image/jpeg", 1);
 }

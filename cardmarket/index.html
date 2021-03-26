@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Cardmarket Photo Generator v.03</title>
+    <title>Cardmarket Photo Generator v.04</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
@@ -10,12 +10,12 @@
     <main>
       <ui>
         <card>
-          <label card><input data-position="left" data-left-image type="file"></input>🃏</label>
-          <label card><input data-position="right" data-right-image type="file"></input>🎴</label>
+          <label card><input data-position="left" type="file"></input>🃏</label>
+          <label card><input data-position="right" type="file"></input>🎴</label>
         </card>
         <detail>
           <template detail-gist>
-            <label detail><input data-position="detail" data-detail-image type="file"></input>🖼</label>
+            <label detail><input data-position="detail" data-detail-image type="file"></input>🃏</label>
           </template>
           <label add-detail>🔍</label>
         </detail>
@@ -28,6 +28,7 @@
       <output>
         <img>
         <action>
+          <button action copyright>🔤</button>
           <button action reset>🧨</button>
         </action>
       </output>
