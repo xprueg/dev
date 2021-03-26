@@ -35,11 +35,8 @@
       }
 
       /* GRID ITEMS */
-      main {
-        padding: 1rem;
-      }
-
       main, aside {
+        padding: 1rem;
         flex: 1 1 50%;
         min-width: 0;
       }
@@ -47,11 +44,6 @@
       aside {
           display: flex;
           justify-content: center;
-      }
-
-      canvas {
-            max-width: 100%;
-          align-self: center;
       }
 
       /* UI */
@@ -67,6 +59,10 @@
         display: flex;
         grid-gap: 10px;
         justify-content: space-between;
+    }
+
+    [card] {
+      font-size: 3rem;
     }
 
     card > *, detail > *, action > * {
@@ -125,6 +121,26 @@
         background: white;
         color: black;
         border: none;
+      }
+
+      /* OUTPUT */
+      output {
+        display: grid;
+        grid-gap: 10px;
+        grid-auto-flow: column;
+        grid-template-rows: auto 50px;
+        height: 100%;
+        width: 100%;
+      }
+
+      canvas {
+        display: none;
+      }
+
+      img {
+        max-width: 100%;
+        min-width: 100%;
+        align-self: center;
       }
 
 
