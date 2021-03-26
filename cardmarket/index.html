@@ -4,92 +4,36 @@
     <meta charset="utf8">
     <title>Cardmarket Photo Generator v.01</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <style>
-      html {
-        font-size: 14px;
-        background: gainsboro;
-        font-family: system-ui;
-      }
-
-      html, body {
-        width: 100%;
-        height: 100%;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-size: 1rem;
-      }
-
-      .ui {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
-      }
-
-      .ui > * {
-        flex-basis: calc(100% / 3);
-      }
-
-      .file_inputs {
-        display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .file_inputs label {
-        flex-basis: calc(100% / 2);
-        background: white;
-        border-radius: .5rem;
-      }
-
-      label, button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }     
-
-      img {
-        max-height: 70vh;
-      }
-
-      canvas {
-        display: none;;
-      }
-
-      button {
-        margin: 1rem 0;
-        background: black;
-        color: white;
-        border: none;
-        border-radius: .5rem;
-      }
-
-      input[type="file"] {
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
-    <div class="ui">
-      <div class="file_inputs">
-        <label>
-          <input data-left-image type="file"></input>
-          Card Front
-        </label>
-        <label>
-          <input data-right-image type="file"></input>
-          Card Back
-        </label>
-      </div>
-      <button>Generate</button>
-      <img data-output/>
-    </div>
-    <canvas></canvas>
+    <main>
+      <ui>
+        <card>
+          <label card><input data-left-image type="file"></input>Front</label>
+          <label card><input data-right-image type="file"></input>Back</label>
+        </card>
+        <detail>
+          <template detail-gist>
+            <label detail><input data-detail-image type="file"></input>Detail</label>
+          </template>
+          <label add-detail>+</label>
+        </detail>
+        <action>
+          <button action>⬤</button>
+        </action>
+      </ui>
+    </main>
+    <aside>
+      <canvas></canvas>
+    </aside>
+
+    <script>
+      document.querySelector("[add-detail]").addEventListener("click", (evt) => {
+        const detail_gist = document.importNode(document.querySelector("[detail-gist]").content, true);
+        document.querySelector("detail").insertBefore(detail_gist, evt.target);
+      });
+    </script>
     <script>
       const pic_size = {
         width: 3024 / 2,
@@ -112,6 +56,8 @@
       };
 
       document.querySelector("button").addEventListener("click", ((_) => {
+        document.body.setAttribute("canvas_visible", String());
+
         const files = [
           document.querySelector("input[data-left-image]").files[0],
           document.querySelector("input[data-right-image]").files[0]
@@ -131,11 +77,11 @@
 
             const text = prompt() || "xpr.org";
             const x = canvas_size.width / 2 - ctx.measureText(text).width / 2;
-            const y = canvas_size.height * .98;
+            const y = canvas_size.height / 2 - ctx.measureText(text).height / 2;
 
             ctx.fillStyle = "white";
             ctx.strokeStyle = 'black';
-            ctx.font = `${canvas_size.height * .015}px system-ui`;
+            ctx.font = `${canvas_size.height * .05}px system-ui`;
             ctx.textBaseline = "bottom";
             ctx.lineWidth = canvas_size.heihgt * .004;
 

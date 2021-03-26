@@ -1,0 +1,197 @@
+      /* RESET */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+
+      input[type=file] {
+        display: none;
+      }
+
+      /* HTML/BODY */
+      html {
+        font-size: 15px;
+        background: black;
+        font-family: system-ui;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;;
+      }
+
+      /* GRID */
+      body {
+        display: flex;
+        width: 200vw;
+        justify-content: space-evenly;
+      }
+
+      [canvas_visible] {
+        flex-direction: row-reverse;
+      }
+
+      /* GRID ITEMS */
+      main {
+        padding: 1rem;
+      }
+
+      main, aside {
+        flex: 1 1 50%;
+        min-width: 0;
+      }
+
+      aside {
+          display: flex;
+      }
+
+      canvas {
+          max-width: 100%;
+          max-height: 100%;
+          align-self: center;
+      }
+
+      /* UI */
+      ui {
+        display: grid;
+        grid-gap: 10px;
+        grid-auto-flow: column;
+        grid-template-rows: 65% auto 50px;
+        height: 100%;
+      }
+
+    ui > * {
+        display: flex;
+        grid-gap: 10px;
+        justify-content: space-between;
+    }
+
+    card > *, detail > *, action > * {
+        background: hsl(0, 0%, 9.8%);
+        border-radius: .2rem;
+        flex: 1 1 100%;
+    }
+
+    card > *:not(:last-child), detail > *:not(:last-child), action > *:not(:last-child) {
+        margin-right: 10px;
+    }
+
+      ui > div {
+        border-bottom: 2px solid white;
+      }
+
+      label:has([type=file]:valid) {
+        background: green;
+      }
+
+      [type=file]:invalid {
+        background: green;
+      }
+
+
+      ui > div:not(:last-child) {
+        display: grid;
+        grid-auto-flow: column;
+      }
+
+      [card] > *:not(:last-child),
+      [detail] > *:not(:last-child) {
+        border-right: 2px solid white;
+      }
+
+      /* Generate Button */
+      ui > div:last-child {
+        flex: 0 0 10vh;
+      }
+
+      /* FILE INPUTS */
+      label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+
+      /* BUTTON */
+      button {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        color: black;
+        border: none;
+      }
+
+
+      /* html {
+        font-size: 14px;
+        background: gainsboro;
+        font-family: system-ui;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+
+      .ui {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .ui > * {
+        flex-basis: calc(100% / 3);
+      }
+
+      .file_inputs {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .file_inputs label {
+        flex-basis: calc(100% / 2);
+        background: white;
+        border-radius: .5rem;
+      }
+
+      label, button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }     
+
+      img {
+        max-height: 70vh;
+      }
+
+      canvas {
+        display: none;;
+      }
+
+      button {
+        margin: 1rem 0;
+        background: black;
+        color: white;
+        border: none;
+        border-radius: .5rem;
+      }
+
+      input[type="file"] {
+        display: none;
+      } */
