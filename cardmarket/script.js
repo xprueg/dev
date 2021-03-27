@@ -55,6 +55,10 @@ function setup_canvas(captures, canvas, ctx) {
             h: captures.right.height / 2
         };
     }
+console.log(captures);
+    if (captures.detail.length) {
+        h += h / 3;
+    }
 
     canvas.width = ctx.width = w;
     canvas.height = ctx.height = h;
@@ -63,9 +67,13 @@ function setup_canvas(captures, canvas, ctx) {
 function render_images(captures, ctx) {
     ctx.drawImage(captures.left, captures.left.calculated.x, captures.left.calculated.y, captures.left.calculated.w, captures.left.calculated.h);
     ctx.drawImage(captures.right, captures.right.calculated.x, captures.right.calculated.y, captures.right.calculated.w, captures.right.calculated.h);
+
+    if (captures.detail.length) {
+        ctx.drawImage(captures.detail[0], 0, captures.left.calculated.h, ctx.width, ctx.height / 3);
+    }
 }
 
-document.querySelector("[copyright]").addEventListener("click", () => {
+document.querySelector("[add-text]").addEventListener("click", () => {
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d", { alpha: false });
     const text = prompt("Copyright Text?") || "XPR.ORG";
@@ -98,12 +106,11 @@ function paint_canvas(nodes) {
     setup_canvas(captures, canvas, ctx);
     render_images(captures, ctx);
 
-    document.querySelector("img").src = canvas.toDataURL("image/jpeg", 1);
+    document.querySelector("img").src = document.querySelector("[download]").href = canvas.toDataURL("image/jpeg", 1);
 }
 
-const inputs = [...document.querySelectorAll("[type=file]")];
-
 document.querySelector("[capture]").addEventListener("click", () => {
+    const inputs = [...document.querySelectorAll("[type=file]")];
     load_blobs(extract_blobs(inputs), paint_canvas);
 
     document.body.setAttribute("canvas_visible", String());
