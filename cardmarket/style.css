@@ -26,8 +26,15 @@ canvas {
   display: none;;
 }
 
-[faint] {
-  opacity: .3;
+[version] {
+  background: white;
+  color: black;
+  padding: 2px 4px;
+  font-size: 0.6em;
+  vertical-align: middle;
+  border-radius: calc(var(--border-radius) / 2);
+  position: relative;
+  margin-left: 0.4rem;
 }
 
 /* html, body */
