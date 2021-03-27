@@ -83,7 +83,7 @@ function render_images(captures, ctx) {
     }
 }
 
-let copyright_text = "xpr.org";
+let copyright_text = "XPR.ORG";
 document.querySelector("[add-text]").addEventListener("click", () => {
     copyright_text = prompt("💬");
 });
@@ -92,8 +92,8 @@ function render_text(text, ctx) {
     if (!text || !text.length)
         return;
 
-    ctx.fillStyle = "rgba(255, 255, 255, .3)";
-    ctx.font = `${ctx.height * .04}px system-ui`;
+    ctx.fillStyle = "rgba(255, 255, 255, .2)";
+    ctx.font = `${ctx.height * .03}px system-ui`;
     ctx.textBaseline = "middle";
     const tm = ctx.measureText(text);
 
@@ -103,7 +103,7 @@ function render_text(text, ctx) {
     let x = ctx.width / 2 - width / 2;
     const y = ctx.height / 2 - (height) / 2;
 
-    while(x + width > 0) x -= width * 1.25;
+    while(x + width > 0) x -= width * 1.75;
     while(x < ctx.width) {
         x += width * 1.25;
         ctx.fillText(text, x, y);
