@@ -57,7 +57,7 @@ function setup_canvas(captures, canvas, ctx) {
     }
 
     if (captures.detail.length) {
-        h += h / 3;
+        h += h / 2.25;
     }
 
     canvas.width = ctx.width = w;
@@ -71,7 +71,7 @@ function render_images(captures, ctx) {
     if (captures.detail.length) {
         const detail = captures.detail[0];
         const frame_w = ctx.width;
-        const frame_h = ctx.height / 3;
+        const frame_h = ctx.height / 2.25;
 
         const ratio = frame_w / detail.width;
 
@@ -83,10 +83,14 @@ function render_images(captures, ctx) {
     }
 }
 
+let copyright_text = "xpr.org";
 document.querySelector("[add-text]").addEventListener("click", () => {
-    const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d", { alpha: false });
-    const text = prompt("Copyright Text?") || "XPR.ORG";
+    copyright_text = prompt("💬");
+});
+
+function render_text(text, ctx) {
+    if (!text || !text.length)
+        return;
 
     ctx.fillStyle = "rgba(255, 255, 255, .3)";
     ctx.font = `${ctx.height * .04}px system-ui`;
@@ -99,14 +103,12 @@ document.querySelector("[add-text]").addEventListener("click", () => {
     let x = ctx.width / 2 - width / 2;
     const y = ctx.height / 2 - (height) / 2;
 
-    while(x > 0) x -= width * 1.25;
+    while(x + width > 0) x -= width * 1.25;
     while(x < ctx.width) {
         x += width * 1.25;
         ctx.fillText(text, x, y);
     };
-
-    document.querySelector("img").src = canvas.toDataURL("image/jpeg", 1);
-});
+}
 
 function paint_canvas(nodes) {
     const canvas = document.querySelector("canvas");
@@ -115,6 +117,7 @@ function paint_canvas(nodes) {
 
     setup_canvas(captures, canvas, ctx);
     render_images(captures, ctx);
+    render_text(copyright_text, ctx);
 
     document.querySelector("img").src = document.querySelector("[download]").href = canvas.toDataURL("image/jpeg", 1);
 }
