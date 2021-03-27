@@ -55,7 +55,7 @@ function setup_canvas(captures, canvas, ctx) {
             h: captures.right.height / 2
         };
     }
-console.log(captures);
+
     if (captures.detail.length) {
         h += h / 3;
     }
@@ -69,7 +69,17 @@ function render_images(captures, ctx) {
     ctx.drawImage(captures.right, captures.right.calculated.x, captures.right.calculated.y, captures.right.calculated.w, captures.right.calculated.h);
 
     if (captures.detail.length) {
-        ctx.drawImage(captures.detail[0], 0, captures.left.calculated.h, ctx.width, ctx.height / 3);
+        const detail = captures.detail[0];
+        const frame_w = ctx.width;
+        const frame_h = ctx.height / 3;
+
+        const ratio = frame_w / detail.width;
+
+        ctx.drawImage(
+            detail,
+            0, (detail.height - frame_h * ratio) / 2, detail.width, frame_h * ratio,
+            0, captures.left.calculated.h, frame_w, frame_h
+        );
     }
 }
 
