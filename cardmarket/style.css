@@ -85,6 +85,16 @@ row {
   height: 100%
 }
 
+row:empty {
+  display: none;;
+}
+
+/* card */
+card {
+  display: grid;
+  grid-gap: 10px;
+}
+
 /* actions */
 actions {
   display: grid;

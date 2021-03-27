@@ -2,25 +2,23 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Card Preview Generator v0.5</title>
+    <title>Card Preview Generator v0.6</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
+    <template>
+      <label detail><input data-position="detail" type="file"></input>🃏</label>
+    </template>
     <main>
-      <h1>Card Preview Generator <span faint>v0.5</span></h1>
+      <h1>Card Preview Generator <span faint>v0.6</span></h1>
       <card>
         <row>
           <label card><input data-position="left" type="file"></input>🃏</label>
           <label card><input data-position="right" type="file"></input>🎴</label>
         </row>
+        <row details></row>
       </card>
-      <!--
-      <detail>
-        <template detail-gist>
-          <label detail><input data-position="detail" type="file"></input>🃏</label>
-        </template>
-      </detail> -->
       <actions>
         <row>
           <button action add-text>🔤</button>
@@ -44,8 +42,9 @@
 
     <script>
       document.querySelector("[add-detail]").addEventListener("click", (evt) => {
-        const detail_gist = document.importNode(document.querySelector("[detail-gist]").content, true);
-        document.querySelector("detail").insertBefore(detail_gist, evt.target);
+        document.querySelector("[details]").appendChild(
+          document.importNode(document.querySelector("template").content, true)
+        );
       });
     </script>
 
