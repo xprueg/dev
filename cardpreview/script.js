@@ -191,7 +191,7 @@ class Canvas {
             return;
 
         this.ctx.fillStyle = "rgba(255, 255, 255, .2)";
-        this.ctx.font = `${this.ctx.height * .03}px system-ui`;
+        this.ctx.font = `bold ${this.ctx.height * .03}px system-ui`;
         this.ctx.textBaseline = "middle";
         const tm = this.ctx.measureText(this.overlay);
 
@@ -203,7 +203,7 @@ class Canvas {
 
         while(x + width > 0) x -= width * 1.75;
         while(x < this.ctx.width) {
-            x += width * 1.25;
+            x += width * 1.75;
             this.ctx.fillText(this.overlay, x, y);
         };
     }
