@@ -16,8 +16,6 @@ function µ(fn) {
 
 class Preview {
     constructor() {
-        this.canvas = document.querySelector("canvas");
-        this.ctx = this.canvas.getContext("2d", { alpha: false });
         this.overlay = null;
 
         this.listen();
@@ -43,11 +41,13 @@ class Preview {
         });
 
         ø(ƒ("[capture]"), "click", async (evt) => {
-            let data = this.create_data_objects();
-            data = this.extract_blobs(data);
-            data = await this.load_images(data);
+            const data = this.create_data_objects();
+            const blobs = this.extract_blobs(data);
+            const images = await this.load_images(data);
+            const captures = this.extract_captures(images);
+            const canvas = Canvas.new(captures, this.overlay);
 
-            this.paint_canvas(this.extract_captures(data));
+            ƒ("img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
 
             document.body.setAttribute("canvas_visible", String());
         });
@@ -85,9 +85,8 @@ class Preview {
                 img.onload = () => {
                     obj.img = img;
                     URL.revokeObjectURL(url);
- 
-                    if (!data.filter((obj) => !obj.hasOwnProperty("img")).length)
-                        next(data);
+
+                    if (data.every((obj) => obj.img)) next(data);
                 };
 
                 img.src = url;
@@ -103,57 +102,72 @@ class Preview {
         };
 
         data.forEach((obj) => {
-            console.log(obj.node);
-            console.log(obj.node.dataset.position);
             switch(obj.node.dataset.position) {
                 case "detail": captures.detail.push(obj.img); break;
                 default: captures[obj.node.dataset.position] = obj.img; break;
             };
         });
-console.log(captures);
+
         return captures;
     }
+}
 
-    setup_canvas(captures) {
+class Canvas {
+    constructor(captures, overlay) {
+        this.self = document.querySelector("canvas");
+        this.ctx = this.self.getContext("2d", { alpha: false });
+
+        this.captures = captures;
+        this.overlay = overlay;
+
+        this.resize();
+        this.render_images();
+        this.render_text();
+    }
+
+    static new(...args) {
+        return new Canvas(...args);
+    }
+
+    resize() {
         let w = 0;
         let h = 0;
 
-        if (captures.left) {
-            w += captures.left.width / 2;
-            h += captures.left.height / 2;
-            captures.left.calculated = {
+        if (this.captures.left) {
+            w += this.captures.left.width / 2;
+            h += this.captures.left.height / 2;
+            this.captures.left.calculated = {
                 x: 0,
                 y: 0,
-                w: captures.left.width / 2,
-                h: captures.left.height / 2
+                w: this.captures.left.width / 2,
+                h: this.captures.left.height / 2
             };
         }
 
-        if (captures.right) {
-            w += captures.right.width / 2;
-            captures.right.calculated = {
-                x: captures.left.calculated.w,
+        if (this.captures.right) {
+            w += this.captures.right.width / 2;
+            this.captures.right.calculated = {
+                x: this.captures.left.calculated.w,
                 y: 0,
-                w: captures.right.width / 2,
-                h: captures.right.height / 2
+                w: this.captures.right.width / 2,
+                h: this.captures.right.height / 2
             };
         }
 
-        if (captures.detail.length) {
+        if (this.captures.detail.length) {
             h += h / 2.25;
         }
 
-        this.canvas.width = this.ctx.width = w;
-        this.canvas.height = this.ctx.height = h;
+        this.self.width = this.ctx.width = w;
+        this.self.height = this.ctx.height = h;
     }
 
-    render_images(captures) {
-        console.log(captures);
-        this.ctx.drawImage(captures.left, captures.left.calculated.x, captures.left.calculated.y, captures.left.calculated.w, captures.left.calculated.h);
-        this.ctx.drawImage(captures.right, captures.right.calculated.x, captures.right.calculated.y, captures.right.calculated.w, captures.right.calculated.h);
+    render_images() {
+        this.ctx.drawImage(this.captures.left, this.captures.left.calculated.x, this.captures.left.calculated.y, this.captures.left.calculated.w, this.captures.left.calculated.h);
+        this.ctx.drawImage(this.captures.right, this.captures.right.calculated.x, this.captures.right.calculated.y, this.captures.right.calculated.w, this.captures.right.calculated.h);
 
-        if (captures.detail.length) {
-            const detail = captures.detail[0];
+        if (this.captures.detail.length) {
+            const detail = this.captures.detail[0];
             const frame_w = this.ctx.width;
             const frame_h = this.ctx.height / 2.25;
 
@@ -162,7 +176,7 @@ console.log(captures);
             this.ctx.drawImage(
                 detail,
                 0, (detail.height - frame_h * ratio) / 2, detail.width, frame_h * ratio,
-                0, captures.left.calculated.h, frame_w, frame_h
+                0, this.captures.left.calculated.h, frame_w, frame_h
             );
         }
     }
@@ -187,13 +201,5 @@ console.log(captures);
             x += width * 1.25;
             this.ctx.fillText(this.overlay, x, y);
         };
-    }
-
-    paint_canvas(captures) {
-        this.setup_canvas(captures);
-        this.render_images(captures);
-        this.render_text();
-
-        ƒ("img").src = ƒ("[download]").href = this.canvas.toDataURL("image/jpeg", 1);
     }
 }
