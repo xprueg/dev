@@ -55,7 +55,8 @@ class Preview {
         ø(ƒ("[reset]"), "click", (evt) => {
             // todo: Reset/Reload overlay from local storage.
 
-            // todo: properly reset inputs.
+            this.inputs.forEach((input) => input.value = String());
+
             document.body.removeAttribute("canvas_visible");
         });
     }
