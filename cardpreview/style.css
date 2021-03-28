@@ -55,7 +55,7 @@ body {
   justify-content: space-evenly;
 }
 
-body[canvas_visible] {
+body[canvas_visible=true] {
   flex-direction: row-reverse;
 }
 

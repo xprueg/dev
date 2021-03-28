@@ -30,6 +30,10 @@ class Preview {
         return new Preview(...args);
     }
 
+    show_result(force) {
+        document.body.setAttribute("canvas_visible", String(force));
+    }
+
     listen() {
         ø(ƒ("[add-text]"), "click", (evt) => {
             this.overlay = prompt("💬");
@@ -51,13 +55,13 @@ class Preview {
 
             ƒ("img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
 
-            document.body.setAttribute("canvas_visible", String());
+            this.show_result(true);
         });
 
         ø(ƒ("[reset]"), "click", (evt) => {
             this.inputs.forEach((input) => input.value = String());
 
-            document.body.removeAttribute("canvas_visible");
+            this.show_result(false);
         });
     }
 
