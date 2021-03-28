@@ -19,6 +19,9 @@ input[type=file] {
 label {
   background: hsl(0, 0%, 9.8%);
   border-radius: var(--border-radius);
+}
+
+label span {
   font-size: 2.5rem;
 }
 
@@ -100,6 +103,15 @@ row:empty {
 card {
   display: grid;
   grid-gap: 10px;
+}
+
+[card] img[src] + span {
+  display: none;
+}
+
+[card] img {
+  max-width: 80%;
+  border-radius: var(--border-radius);
 }
 
 /* actions */

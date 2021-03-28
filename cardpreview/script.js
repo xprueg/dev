@@ -1,9 +1,9 @@
-function ƒ(selector) {
-    return document.querySelector(selector);
+function ƒ(selector, base = document) {
+    return base.querySelector(selector);
 }
 
-function ƒƒ(selector) {
-    return [...document.querySelectorAll(selector)];
+function ƒƒ(selector, base = document) {
+    return [...base.querySelectorAll(selector)];
 }
 
 function ø(node, type, fn) {
@@ -35,6 +35,18 @@ class Preview {
     }
 
     listen() {
+        this.inputs.forEach((input) => {
+            // todo: Release ObjectUrl, remove img on reset.
+            ø(input, "change", (evt) => {
+                const file = evt.target.files[0];
+                const img = ƒ("img", evt.target.parentNode);
+
+                if (file) {
+                    img.src = URL.createObjectURL(file);
+                }
+            });
+        });
+
         ø(ƒ("[add-text]"), "click", (evt) => {
             this.overlay = prompt("💬");
             localStorage.setItem(this.OVERLAY_KEY, this.overlay);
