@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Card Preview Generator v0.11</title>
+    <title>Card Preview Generator v0.12</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
@@ -11,7 +11,7 @@
       <label detail><input data-position="detail" type="file"></input>🃏</label>
     </template>
     <main>
-      <h1>Card Preview Generator <span version>v0.11</span></h1>
+      <h1>Card Preview Generator <span version>v0.12</span></h1>
       <card>
         <row>
           <label card><input data-position="left" type="file"></input>🃏</label>
@@ -40,14 +40,7 @@
       <canvas></canvas>
     </aside>
 
-    <script>
-      document.querySelector("[add-detail]").addEventListener("click", (evt) => {
-        document.querySelector("[details]").appendChild(
-          document.importNode(document.querySelector("template").content, true)
-        );
-      });
-    </script>
-
     <script src="script.js"></script>
+    <script>Preview.init();</script>
   </body>
 </html>

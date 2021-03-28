@@ -27,6 +27,12 @@ class Preview {
     }
 
     listen() {
+        ø(ƒ("[add-detail]"), "click", (evt) => {
+            ƒ("[details]").appendChild(
+                document.importNode(ƒ("template").content, true)
+            );
+        });
+
         ø(ƒ("[capture]"), "click", (evt) => {
             load_blobs(extract_blobs(this.inputs), paint_canvas);
             document.body.setAttribute("canvas_visible", String());
@@ -38,8 +44,6 @@ class Preview {
         });
     }
 }
-
-Preview.init();
 
 function extract_blobs(nodes) {
     return nodes
