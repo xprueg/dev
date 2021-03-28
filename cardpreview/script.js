@@ -16,7 +16,8 @@ function µ(fn) {
 
 class Preview {
     constructor() {
-        this.overlay = null;
+        this.OVERLAY_KEY = "overlay";
+        this.overlay = localStorage.getItem(this.OVERLAY_KEY);
 
         this.listen();
     }
@@ -32,6 +33,7 @@ class Preview {
     listen() {
         ø(ƒ("[add-text]"), "click", (evt) => {
             this.overlay = prompt("💬");
+            localStorage.setItem(this.OVERLAY_KEY, this.overlay);
         });
 
         ø(ƒ("[add-detail]"), "click", (evt) => {
@@ -53,8 +55,6 @@ class Preview {
         });
 
         ø(ƒ("[reset]"), "click", (evt) => {
-            // todo: Reset/Reload overlay from local storage.
-
             this.inputs.forEach((input) => input.value = String());
 
             document.body.removeAttribute("canvas_visible");
