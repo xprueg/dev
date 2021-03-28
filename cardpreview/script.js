@@ -14,6 +14,7 @@ class Preview {
     constructor() {
         this.canvas = document.querySelector("canvas");
         this.ctx = this.canvas.getContext("2d", { alpha: false });
+        this.overlay = null;
 
         this.listen();
     }
@@ -27,6 +28,10 @@ class Preview {
     }
 
     listen() {
+        ø(ƒ("[add-text]"), "click", (evt) => {
+            this.overlay = prompt("💬");
+        });
+
         ø(ƒ("[add-detail]"), "click", (evt) => {
             ƒ("[details]").appendChild(
                 document.importNode(ƒ("template").content, true)
@@ -129,11 +134,6 @@ function render_images(captures, ctx) {
         );
     }
 }
-
-let copyright_text = "XPR.ORG";
-document.querySelector("[add-text]").addEventListener("click", () => {
-    copyright_text = prompt("💬");
-});
 
 function render_text(text, ctx) {
     if (!text || !text.length)
