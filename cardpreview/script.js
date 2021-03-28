@@ -61,11 +61,11 @@ class Preview {
         ø(ƒ("[capture]"), "click", async (evt) => {
             const data = this.create_data_objects();
             const blobs = this.extract_blobs(data);
-            const images = await this.load_images(data);
+            const images = await this.load_images(blobs);
             const captures = this.extract_captures(images);
             const canvas = Canvas.new(captures, this.overlay);
 
-            ƒ("img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
+            ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
 
             this.show_result(true);
         });
