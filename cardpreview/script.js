@@ -1,3 +1,46 @@
+function ƒ(selector) {
+    return document.querySelector(selector);
+}
+
+function ƒƒ(selector) {
+    return [...document.querySelectorAll(selector)];
+}
+
+function ø(node, type, fn) {
+    node.addEventListener(type, fn);
+}
+
+class Preview {
+    constructor() {
+        this.canvas = document.querySelector("canvas");
+        this.ctx = this.canvas.getContext("2d", { alpha: false });
+
+        this.listen();
+    }
+
+    get inputs() {
+        return ƒƒ("[type=file]");
+    }
+
+    static init(...args) {
+        return new Preview(...args);
+    }
+
+    listen() {
+        ø(ƒ("[capture]"), "click", (evt) => {
+            load_blobs(extract_blobs(this.inputs), paint_canvas);
+            document.body.setAttribute("canvas_visible", String());
+        });
+
+        ø(ƒ("[reset]"), "click", (evt) => {
+            // todo: properly reset inputs.
+            document.body.removeAttribute("canvas_visible");
+        });
+    }
+}
+
+Preview.init();
+
 function extract_blobs(nodes) {
     return nodes
         .filter((node) => node.files.length)
@@ -121,15 +164,3 @@ function paint_canvas(nodes) {
 
     document.querySelector("img").src = document.querySelector("[download]").href = canvas.toDataURL("image/jpeg", 1);
 }
-
-document.querySelector("[capture]").addEventListener("click", () => {
-    const inputs = [...document.querySelectorAll("[type=file]")];
-    load_blobs(extract_blobs(inputs), paint_canvas);
-
-    document.body.setAttribute("canvas_visible", String());
-});
-
-document.querySelector("[reset]").addEventListener("click", () => {
-    // todo: properly reset inputs.
-    document.body.removeAttribute("canvas_visible");
-});
