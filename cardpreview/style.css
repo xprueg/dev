@@ -2,7 +2,12 @@
 :root {
   --grid-gap: 10px;
   --border-radius: 5px;
-  --button-height: 60px;
+  --button-height: 70px;
+
+  --background: #111418;
+  --box-background: #232B35;
+  --button-background: #E9EBEF;
+  --text: #E9EBEF;
 }
 
 * {
@@ -17,7 +22,7 @@ input[type=file] {
 }
 
 label {
-  background: hsl(0, 0%, 9.8%);
+  background: var(--box-background);
   border-radius: var(--border-radius);
 }
 
@@ -30,8 +35,8 @@ canvas {
 }
 
 [version] {
-  background: white;
-  color: black;
+  background: var(--text);
+  color: var(--background);
   padding: 2px 4px;
   font-size: 0.6em;
   vertical-align: middle;
@@ -66,7 +71,7 @@ body[canvas_visible=true] {
 main, aside {
   display: grid;
   grid-gap: var(--grid-gap);
-  background: black;
+  background: var(--background);
   padding: 1rem;
   flex: 1 1 50%;
   min-width: 0;
@@ -81,7 +86,7 @@ aside {
 }
 
 h1 {
-  color: white;
+  color: var(--text);
   text-align: center;
   font-size: 1rem;
   padding: 1rem 0;
@@ -123,13 +128,31 @@ actions {
 button, [button] {
   text-decoration: none;
   height: var(--button-height);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
+  display: grid;
+  background: var(--button-background);
   color: black;
   border: none;
   border-radius: var(--border-radius);
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+}
+
+[icon] {
+  align-self: center;
+  text-align: center;
+}
+
+[text] {
+  background: var(--box-background);
+  color: var(--text);
+  height: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .05em;
 }
 
 /* input */
