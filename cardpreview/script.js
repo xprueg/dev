@@ -14,6 +14,21 @@ function µ(fn) {
     return new Promise(fn);
 }
 
+function input_to_img(node) {
+    return µ((next) => {
+        if (!node.files.length)
+            next(null);
+
+        const url = URL.createObjectURL(node.files[0]);
+        const img = new Image();
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            next(img);
+        };
+        img.src = url;
+    });
+}
+
 class Preview {
     constructor() {
         this.OVERLAY_KEY = "overlay";
@@ -59,11 +74,14 @@ class Preview {
         });
 
         ø(ƒ("[capture]"), "click", async (evt) => {
-            const data = this.create_data_objects();
-            const blobs = this.extract_blobs(data);
-            const images = await this.load_images(blobs);
-            const captures = this.extract_captures(images);
-            const canvas = Canvas.new(captures, this.overlay);
+            const canvas = Canvas.new({
+                left: await input_to_img(ƒ("[data-position=left]")),
+                right: await input_to_img(ƒ("[data-position=right]")),
+                detail: await ƒƒ("[data-position=detail]").reduce(
+                    async (details, node) => details.concat(await input_to_img(node)),
+                    Array()
+                )
+            }, this.overlay);
 
             ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
 
@@ -81,57 +99,6 @@ class Preview {
 
             this.show_result(false);
         });
-    }
-
-    create_data_objects() {
-        return this.inputs.reduce((data, input) => {
-            return data.concat({
-                node: input,
-                blob: null,
-                img: null,
-            });
-        }, Array());
-    }
-
-    extract_blobs(data) {
-        return data
-            .filter((obj) => obj.node.files.length)
-            .map((obj) => Object.assign(obj, { blob: obj.node.files[0] }));
-    }
-
-    load_images(data) {
-        return µ((next) => {
-            data.forEach((obj) => {
-                const img = new Image();
-                const url = URL.createObjectURL(obj.blob);
-
-                img.onload = () => {
-                    obj.img = img;
-                    URL.revokeObjectURL(url);
-
-                    if (data.every((obj) => obj.img)) next(data);
-                };
-
-                img.src = url;
-            });
-        });
-    }
-
-    extract_captures(data) {
-        const captures = {
-            left: null,
-            right: null,
-            detail: Array()
-        };
-
-        data.forEach((obj) => {
-            switch(obj.node.dataset.position) {
-                case "detail": captures.detail.push(obj.img); break;
-                default: captures[obj.node.dataset.position] = obj.img; break;
-            };
-        });
-
-        return captures;
     }
 }
 
