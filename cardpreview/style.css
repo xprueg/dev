@@ -2,7 +2,7 @@
 :root {
   --grid-gap: 10px;
   --border-radius: 5px;
-  --button-height: 70px;
+  --button-height: 4rem;
 
   --background: #111418;
   --box-background: #232B35;
@@ -130,34 +130,26 @@ actions {
   grid-gap: var(--grid-gap);
 }
 
-button, [button] {
+button {
   text-decoration: none;
   height: var(--button-height);
-  display: grid;
   background: var(--button-background);
   color: black;
   border: none;
   border-radius: var(--border-radius);
-  grid-template-rows: 1fr auto;
-  overflow: hidden;
+  font-weight: 600;
+  width: 100%;
 }
 
-[icon] {
-  align-self: center;
-  text-align: center;
-}
-
-[text] {
+button[small] {
   background: var(--box-background);
   color: var(--text);
-  height: 1.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.6rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  font-size: .8rem;
+}
+
+[reset] {
+  background: hsl(0, 49.79%, 46.86%);
+  color: var(--text);
 }
 
 /* input */

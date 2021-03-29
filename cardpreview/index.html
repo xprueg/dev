@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Card Preview Generator v0.26</title>
+    <title>Card Preview Generator v0.27</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
@@ -11,7 +11,7 @@
       <label detail><img><span>🃏</span><input data-position="detail" type="file"></input></label>
     </template>
     <main>
-      <h1>Card Preview Generator <span version>v0.26</span></h1>
+      <h1>Card Preview Generator <span version>v0.27</span></h1>
       <card>
         <row>
           <label card><img><span>🃏</span><input data-position="left" type="file"></input></label>
@@ -21,20 +21,11 @@
       </card>
       <actions>
         <row>
-          <button action add-text>
-            <span icon>🔤</span>
-            <span text>Set Overlay</span>
-          </button>
-          <button action add-detail>
-            <span icon>🔍</span>
-            <span text>Add Detail Images</span>
-          </button>
+          <button small action add-text>Set Overlay Text</button>
+          <button small action add-detail>Add Detail Image</button>
         </row>
         <row>
-          <button action capture>
-            <span icon>📸</span>
-            <span text>Generate Image</span>
-          </button>
+          <button action capture>Generate Image</button>
         </row>
       </actions>
     </main>
@@ -42,14 +33,10 @@
       <img result>
       <actions>
         <row>
-          <a button download="pic.jpg">
-            <span icon>💾</span>
-            <span text>Download</span>
-          </a>
-          <button reset>
-            <span icon>🧨</span>
-            <span text>New</span>
-          </button>
+          <a download="pic.jpg"><button small>Download</button></a>
+        </row>
+        <row>
+          <button reset>🧨 New Image</button>
         </row>
       </actions>
       <canvas></canvas>
