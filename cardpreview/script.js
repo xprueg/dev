@@ -14,7 +14,7 @@ function µ(fn) {
     return new Promise(fn);
 }
 
-function input_to_img(node) {
+function get_image_from(node) {
     return µ((next) => {
         if (!node.files.length)
             next(null);
@@ -51,14 +51,10 @@ class Preview {
 
     listen() {
         this.inputs.forEach((input) => {
-            // todo: Release ObjectUrl, remove img on reset.
             ø(input, "change", (evt) => {
-                const file = evt.target.files[0];
-                const img = ƒ("img", evt.target.parentNode);
-
-                if (file) {
-                    img.src = URL.createObjectURL(file);
-                }
+                get_image_from(evt.target).then((img) => {
+                    ƒ("img", evt.target.parentNode).replaceWith(img);
+                });
             });
         });
 
@@ -75,10 +71,10 @@ class Preview {
 
         ø(ƒ("[capture]"), "click", async (evt) => {
             const canvas = Canvas.new({
-                left: await input_to_img(ƒ("[data-position=left]")),
-                right: await input_to_img(ƒ("[data-position=right]")),
+                left: await get_image_from(ƒ("[data-position=left]")),
+                right: await get_image_from(ƒ("[data-position=right]")),
                 detail: await ƒƒ("[data-position=detail]").reduce(
-                    async (details, node) => details.concat(await input_to_img(node)),
+                    async (details, node) => details.concat(await get_image_from(node)),
                     Array()
                 )
             }, this.overlay);
