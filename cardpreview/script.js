@@ -71,7 +71,13 @@ class Preview {
         });
 
         ø(ƒ("[reset]"), "click", (evt) => {
-            this.inputs.forEach((input) => input.value = String());
+            this.inputs.forEach((input) => {
+                input.value = String();
+
+                const img = ƒ("img", input.parentNode);
+                img.removeAttribute("src");
+                img.height = img.width = 0;
+            });
 
             this.show_result(false);
         });
