@@ -88,10 +88,7 @@ class Preview {
         ø(ƒ("[reset]"), "click", (evt) => {
             this.inputs.forEach((input) => {
                 input.value = String();
-
-                const img = ƒ("img", input.parentNode);
-                img.removeAttribute("src");
-                img.height = img.width = 0;
+                ƒ("img", input.parentNode).replaceWith(document.createElement("img"));
             });
 
             this.show_result(false);
