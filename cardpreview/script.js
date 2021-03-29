@@ -50,11 +50,12 @@ class Preview {
     }
 
     listen() {
-        this.inputs.forEach((input) => {
-            ø(input, "change", (evt) => {
-                get_image_from(evt.target).then((img) => {
-                    ƒ("img", evt.target.parentNode).replaceWith(img);
-                });
+        ø(ƒ("card"), "change", (evt) => {
+            if (evt.target.getAttribute("type") !== "file")
+                return;
+
+            get_image_from(evt.target).then((img) => {
+                ƒ("img", evt.target.parentNode).replaceWith(img);
             });
         });
 
