@@ -81,6 +81,7 @@ class Preview {
             }, this.overlay);
 
             ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
+            ƒ("aside [size]").textContent = `${canvas.self.width}px × ${canvas.self.height}px`;
 
             this.show_result(true);
         });
