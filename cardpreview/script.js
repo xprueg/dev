@@ -70,6 +70,8 @@ class Preview {
             );
         });
 
+        // ø(ƒ("[rs]"), "click", (evt) => {});
+
         ø(ƒ("[capture]"), "click", async (evt) => {
             const canvas = Canvas.new({
                 left: await get_image_from(ƒ("[data-position=left]")),
