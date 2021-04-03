@@ -119,6 +119,38 @@ card {
   border-radius: var(--border-radius);
 }
 
+[card-mockup] {
+  width: 50px;
+  height: 76px;
+  border-radius: calc(var(--border-radius) / 2);
+  background: var(--background);
+  position: relative;
+}
+
+[card-mockup]::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  background: var(--box-background);
+}
+
+[card-mockup=front]::before {
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 50%;
+  border-radius: calc(var(--border-radius) / 2);
+}
+
+[card-mockup=back]::before {
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  border-radius: 100%;
+}
+
 /* actions */
 actions {
   display: grid;
