@@ -3,6 +3,7 @@
   --grid-gap: 10px;
   --border-radius: 5px;
   --button-height: 4rem;
+  --small-button-height: 2.5rem;
 
   --background: #111418;
   --box-background: #232B35;
@@ -138,6 +139,7 @@ button {
 button[small] {
   background: var(--box-background);
   color: var(--text);
+  height: var(--small-button-height);
   font-size: .8rem;
 }
 
