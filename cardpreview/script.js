@@ -50,52 +50,58 @@ class Preview {
     }
 
     listen() {
-        ø(ƒ("card"), "change", (evt) => {
+        ø(ƒ("actions"), "change", async (evt) => {
             if (evt.target.getAttribute("type") !== "file")
                 return;
 
-            get_image_from(evt.target).then((img) => {
-                ƒ("img", evt.target.parentNode).replaceWith(img);
-            });
+            // get_image_from(evt.target).then((img) => {
+            //     ƒ("img", evt.target.parentNode).replaceWith(img);
+            // });
+
+            const canvas = Canvas.new({
+                left: await get_image_from(ƒ("[data-position=left]")),
+                right: await get_image_from(ƒ("[data-position=left]")),
+                detail: Array()
+            }, this.overlay);
         });
 
-        ø(ƒ("[add-text]"), "click", (evt) => {
-            this.overlay = prompt("💬");
-            localStorage.setItem(this.OVERLAY_KEY, this.overlay);
-        });
+        // ø(ƒ("[add-text]"), "click", (evt) => {
+        //     this.overlay = prompt("💬");
+        //     localStorage.setItem(this.OVERLAY_KEY, this.overlay);
+        // });
 
-        ø(ƒ("[add-detail]"), "click", (evt) => {
-            ƒ("[details]").appendChild(
-                document.importNode(ƒ("template").content, true)
-            );
-        });
+        // ø(ƒ("[add-detail]"), "click", (evt) => {
+        //     ƒ("[details]").appendChild(
+        //         document.importNode(ƒ("template").content, true)
+        //     );
+        // });
 
         // ø(ƒ("[rs]"), "click", (evt) => {});
 
-        ø(ƒ("[capture]"), "click", async (evt) => {
-            const canvas = Canvas.new({
-                left: await get_image_from(ƒ("[data-position=left]")),
-                right: await get_image_from(ƒ("[data-position=right]")),
-                detail: await ƒƒ("[data-position=detail]").reduce(
-                    async (details, node) => details.concat(await get_image_from(node)),
-                    Array()
-                )
-            }, this.overlay);
+        // ø(ƒ("[capture]"), "click", async (evt) => {
+        //     const canvas = Canvas.new({
+        //         left: await get_image_from(ƒ("[data-position=left]")),
+        //         right: await get_image_from(ƒ("[data-position=right]")),
+        //         detail: await ƒƒ("[data-position=detail]").reduce(
+        //             async (details, node) => details.concat(await get_image_from(node)),
+        //             Array()
+        //         )
+        //     }, this.overlay);
 
-            ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
-            ƒ("aside [size]").textContent = `${canvas.self.width}px × ${canvas.self.height}px`;
+        //     ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
+        //     ƒ("aside [size]").textContent = `${canvas.self.width}px × ${canvas.self.height}px`;
 
-            this.show_result(true);
-        });
+        //     this.show_result(true);
+        // });
 
-        ø(ƒ("[reset]"), "click", (evt) => {
-            this.inputs.forEach((input) => {
-                input.value = String();
-                ƒ("img", input.parentNode).replaceWith(document.createElement("img"));
-            });
+        // ø(ƒ("[reset]"), "click", (evt) => {
+        //     this.inputs.forEach((input) => {
+        //         input.value = String();
+        //         ƒ("img", input.parentNode).replaceWith(document.createElement("img"));
+        //     });
 
-            this.show_result(false);
-        });
+        //     this.show_result(false);
+        // });
     }
 }
 

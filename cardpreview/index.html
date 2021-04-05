@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Card Preview Generator v0.32</title>
+    <title>Card Preview Generator v0.33</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
@@ -11,25 +11,25 @@
       <label detail><img><span>🃏</span><input data-position="detail" type="file"></input></label>
     </template>
     <main>
-      <h1>Card Preview Generator <span version>v0.32</span></h1>
-      <card>
-        <row>
-          <label card><img><div card-mockup="front"></div></div><input data-position="left" type="file"></input></label>
-          <label card><img><div card-mockup="back"></div><input data-position="right" type="file"></input></label>
-        </row>
-        <row details></row>
-      </card>
+      <output>
+        <span version tag>v0.33</span>
+        <canvas>:<</canvas>
+      </output>
       <actions>
         <row>
-          <button small action add-text>Set Overlay Text</button>
           <button small action add-detail>Add Detail Image</button>
         </row>
         <row>
-          <button action capture>Generate Image</button>
+          <button small action add-detail>Set Overlay Text</button>
+        </row>
+        <row>
+          <label button><input data-position="left" type="file"></input>Card Font</label>
+          <label button><input data-position="right" type="file"></input>Card Back</label>
         </row>
       </actions>
     </main>
-    <aside>
+    
+    <!-- <aside>
       <h1 size></h1>
       <img result>
       <actions>
@@ -37,15 +37,15 @@
           <button small rs="width">Set Width</button>
           <button small rs="height">Set Height</button>
         </row> -->
-        <row>
+        <!-- <row>
           <a download="pic.jpg"><button small>Download</button></a>
         </row>
         <row>
           <button reset>🧨 New Image</button>
         </row>
       </actions>
-      <canvas></canvas>
-    </aside>
+      <canvas></canvas> -->
+    <!-- </aside> -->
 
     <script src="script.js"></script>
     <script>Preview.init();</script>
