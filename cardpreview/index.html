@@ -2,52 +2,37 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Card Preview Generator v0.33</title>
+    <title>Card Preview Generator v0.34</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
-  <body canvas_visible="false">
-    <template>
-      <label detail><img><span>🃏</span><input data-position="detail" type="file"></input></label>
-    </template>
-    <main>
-      <output>
-        <span version tag>v0.33</span>
-        <canvas>:<</canvas>
-      </output>
-      <actions>
-        <row>
-          <button small action add-detail>Add Detail Image</button>
-        </row>
-        <row>
-          <button small action add-detail>Set Overlay Text</button>
-        </row>
-        <row>
-          <label button><input data-position="left" type="file"></input>Card Font</label>
-          <label button><input data-position="right" type="file"></input>Card Back</label>
-        </row>
-      </actions>
-    </main>
-    
-    <!-- <aside>
-      <h1 size></h1>
-      <img result>
-      <actions>
-        <!-- <row>
-          <button small rs="width">Set Width</button>
-          <button small rs="height">Set Height</button>
-        </row> -->
-        <!-- <row>
-          <a download="pic.jpg"><button small>Download</button></a>
-        </row>
-        <row>
-          <button reset>🧨 New Image</button>
-        </row>
-      </actions>
-      <canvas></canvas> -->
-    <!-- </aside> -->
-
+  <body>
+    <status>
+      <span>Card Preview Generator</span>
+      <span>v0.34</span>
+    </status>
+    <output>
+      <img>
+      <canvas>:<</canvas>
+    </output>
+    <actions>
+      <row>
+        <label is_button>
+          <input set_watermark type="button" />
+          Set Watermark
+        </label>
+      </row>
+      <row>
+        <label is_button>
+          <input front type="file"></input>
+          Front
+        </label>
+        <label is_button>
+          <input back type="file"></input>
+          Back
+        </label>
+      </row>
+    </actions>
     <script src="script.js"></script>
-    <script>Preview.init();</script>
   </body>
 </html>

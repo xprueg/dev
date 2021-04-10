@@ -7,6 +7,9 @@ function ƒƒ(selector, base = document) {
 }
 
 function ø(node, type, fn) {
+    if (Array.isArray(node))
+        return void node.forEach((n) => ø(n, type, fn));
+
     node.addEventListener(type, fn);
 }
 
@@ -29,159 +32,94 @@ function get_image_from(node) {
     });
 }
 
-class Preview {
-    constructor() {
-        this.OVERLAY_KEY = "overlay";
-        this.overlay = localStorage.getItem(this.OVERLAY_KEY);
+// • Listener
 
-        this.listen();
-    }
+ø(ƒƒ("[type=file]"), "change", (evt) => {
+    Canvas.repaint((data) => ƒ("img").src = data);
+});
 
-    get inputs() {
-        return ƒƒ("[type=file]");
-    }
+ø(ƒ("[set_watermark]"), "click", (evt) => {
+    const current = localStorage.getItem("watermark");
+    const watermark = prompt(
+        "Set your Watermark.",
+        current !== null ? current : String()
+    );
 
-    static init(...args) {
-        return new Preview(...args);
-    }
+    if (watermark == null)
+        return;
 
-    show_result(force) {
-        document.body.setAttribute("canvas_visible", String(force));
-    }
+    localStorage.setItem("watermark", watermark);
+    Canvas.repaint((data) => ƒ("img").src = data);
+});
 
-    listen() {
-        ø(ƒ("actions"), "change", async (evt) => {
-            if (evt.target.getAttribute("type") !== "file")
-                return;
-
-            // get_image_from(evt.target).then((img) => {
-            //     ƒ("img", evt.target.parentNode).replaceWith(img);
-            // });
-
-            const canvas = Canvas.new({
-                left: await get_image_from(ƒ("[data-position=left]")),
-                right: await get_image_from(ƒ("[data-position=left]")),
-                detail: Array()
-            }, this.overlay);
-        });
-
-        // ø(ƒ("[add-text]"), "click", (evt) => {
-        //     this.overlay = prompt("💬");
-        //     localStorage.setItem(this.OVERLAY_KEY, this.overlay);
-        // });
-
-        // ø(ƒ("[add-detail]"), "click", (evt) => {
-        //     ƒ("[details]").appendChild(
-        //         document.importNode(ƒ("template").content, true)
-        //     );
-        // });
-
-        // ø(ƒ("[rs]"), "click", (evt) => {});
-
-        // ø(ƒ("[capture]"), "click", async (evt) => {
-        //     const canvas = Canvas.new({
-        //         left: await get_image_from(ƒ("[data-position=left]")),
-        //         right: await get_image_from(ƒ("[data-position=right]")),
-        //         detail: await ƒƒ("[data-position=detail]").reduce(
-        //             async (details, node) => details.concat(await get_image_from(node)),
-        //             Array()
-        //         )
-        //     }, this.overlay);
-
-        //     ƒ("aside img").src = ƒ("[download]").href = canvas.self.toDataURL("image/jpeg", 1);
-        //     ƒ("aside [size]").textContent = `${canvas.self.width}px × ${canvas.self.height}px`;
-
-        //     this.show_result(true);
-        // });
-
-        // ø(ƒ("[reset]"), "click", (evt) => {
-        //     this.inputs.forEach((input) => {
-        //         input.value = String();
-        //         ƒ("img", input.parentNode).replaceWith(document.createElement("img"));
-        //     });
-
-        //     this.show_result(false);
-        // });
-    }
-}
+// • Canvas
 
 class Canvas {
-    constructor(captures, overlay) {
-        this.self = document.querySelector("canvas");
+    constructor(next) {
+        this.next = next;
+        this.self = ƒ("canvas");
         this.ctx = this.self.getContext("2d", { alpha: false });
 
-        this.captures = captures;
-        this.overlay = overlay;
-
-        this.resize();
-        this.render_images();
-        this.render_text();
+        this.init();
     }
 
-    static new(...args) {
-        return new Canvas(...args);
+    static repaint(next) {
+        new Canvas(next);
+    }
+
+    async init() {
+        await this.load();
+
+        if (this.front === null && this.back === null)
+            return;
+
+        this.resize();
+        this.paint();
+
+        this.next(this.self.toDataURL("image/jpeg", 1));
+    }
+
+    async load() {
+        this.front = await get_image_from(ƒ("[front]"));
+        this.back = await get_image_from(ƒ("[back]"));
+        this.watermark = localStorage.getItem("watermark");
     }
 
     resize() {
-        let w = 0;
-        let h = 0;
+        this.width = 0;
+        this.height = 0;
 
-        if (this.captures.left) {
-            w += this.captures.left.width / 2;
-            h += this.captures.left.height / 2;
-            this.captures.left.calculated = {
-                x: 0,
-                y: 0,
-                w: this.captures.left.width / 2,
-                h: this.captures.left.height / 2
-            };
-        }
+        [this.front, this.back].forEach((img) => {
+            if (img === null)
+                return;
 
-        if (this.captures.right) {
-            w += this.captures.right.width / 2;
-            this.captures.right.calculated = {
-                x: this.captures.left.calculated.w,
-                y: 0,
-                w: this.captures.right.width / 2,
-                h: this.captures.right.height / 2
-            };
-        }
+            this.width = this.width + img.width;
+            this.height = this.height === 0
+                ? img.height
+                : Math.min(this.height, img.height);
+        });
 
-        if (this.captures.detail.length) {
-            h += h / 2.25;
-        }
-
-        this.self.width = this.ctx.width = w;
-        this.self.height = this.ctx.height = h;
+        this.self.width = this.ctx.width = this.width;
+        this.self.height = this.ctx.height = this.height;
     }
 
-    render_images() {
-        this.ctx.drawImage(this.captures.left, this.captures.left.calculated.x, this.captures.left.calculated.y, this.captures.left.calculated.w, this.captures.left.calculated.h);
-        this.ctx.drawImage(this.captures.right, this.captures.right.calculated.x, this.captures.right.calculated.y, this.captures.right.calculated.w, this.captures.right.calculated.h);
+    paint() {
+        if (this.front)
+            this.ctx.drawImage(this.front, 0, 0, this.front.width, this.front.height);
 
-        if (this.captures.detail.length) {
-            const detail = this.captures.detail[0];
-            const frame_w = this.ctx.width;
-            const frame_h = this.ctx.height / 2.25;
+        if (this.back)
+            this.ctx.drawImage(this.back, this.front ? this.front.width : 0, 0,
+                               this.back.width, this.back.height);
 
-            const ratio = frame_w / detail.width;
-
-            this.ctx.drawImage(
-                detail,
-                0, (detail.height - frame_h * ratio) / 2, detail.width, frame_h * ratio,
-                0, this.captures.left.calculated.h, frame_w, frame_h
-            );
-        }
+        if (this.watermark && this.watermark.length)
+            this.paint_watermark();
     }
 
-    render_text() {
-        if (!this.overlay || !this.overlay.length)
-            return;
-
+    paint_watermark() {
         this.ctx.fillStyle = "rgba(255, 255, 255, .2)";
         this.ctx.font = `bold ${this.ctx.height * .03}px system-ui`;
         this.ctx.textBaseline = "middle";
-        const tm = this.ctx.measureText(this.overlay);
+        const tm = this.ctx.measureText(this.watermark);
 
         const width = Math.abs(tm.actualBoundingBoxLeft) + Math.abs(tm.actualBoundingBoxRight);
         const height = Math.abs(tm.actualBoundingBoxAscent) + Math.abs(tm.actualBoundingBoxDescent);
@@ -192,7 +130,7 @@ class Canvas {
         while(x + width > 0) x -= width * 1.75;
         while(x < this.ctx.width) {
             x += width * 1.75;
-            this.ctx.fillText(this.overlay, x, y);
+            this.ctx.fillText(this.watermark, x, y);
         };
     }
 }
