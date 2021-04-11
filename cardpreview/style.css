@@ -63,6 +63,11 @@ status {
   display: flex;
   justify-content: space-between;
   box-shadow: 0 0 20px -5px var(--background);
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: 0.5rem;
+  z-index: 999;
+  height: 1.8rem;
+  align-items: center;
 }
 
 /* output */
