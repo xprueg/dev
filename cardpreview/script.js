@@ -26,6 +26,10 @@ function get_image_from(node) {
         const img = new Image();
         img.onload = () => {
             URL.revokeObjectURL(url);
+
+            img.width /= 2;
+            img.height /= 2;
+
             next(img);
         };
         img.src = url;
@@ -99,8 +103,8 @@ class Canvas {
                 : Math.min(this.height, img.height);
         });
 
-        this.self.width = this.ctx.width = this.width / 2;
-        this.self.height = this.ctx.height = this.height / 2;
+        this.self.width = this.ctx.width = this.width;
+        this.self.height = this.ctx.height = this.height;
     }
 
     paint() {
