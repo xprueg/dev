@@ -99,8 +99,8 @@ class Canvas {
                 : Math.min(this.height, img.height);
         });
 
-        this.self.width = this.ctx.width = this.width;
-        this.self.height = this.ctx.height = this.height;
+        this.self.width = this.ctx.width = this.width / 2;
+        this.self.height = this.ctx.height = this.height / 2;
     }
 
     paint() {
