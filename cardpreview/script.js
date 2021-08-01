@@ -27,8 +27,8 @@ function get_image_from(node) {
         img.onload = () => {
             URL.revokeObjectURL(url);
 
-            img.width /= 3;
-            img.height /= 3;
+            img.width /= 2;
+            img.height /= 2;
 
             next(img);
         };
