@@ -1,11 +1,11 @@
 const ctx = canvas.getContext("2d")
 
-const scale = 8
+const scale = 4
 const ctxw = canvas.width = canvas.getBoundingClientRect().width / scale
 const ctxh = canvas.height = canvas.getBoundingClientRect().height / scale
 
 let active_color = "black"
-ctx.lineWidth = 1
+ctx.lineWidth = 2
 ctx.strokeStyle = "black"
 
 class LineRenderer {
@@ -39,7 +39,7 @@ class Line {
     color = active_color
 
     addPoint({ clientX, clientY, timeStamp }) {
-        this.path.push({ x: clientX / scale, y: clientY / scale, ts: timeStamp })
+        this.path.push({ x: clientX / scale, y: clientY / scale - bg.getBoundingClientRect().height / scale, ts: timeStamp })
     }
 
     finish() {
@@ -207,4 +207,8 @@ canvas.addEventListener("touchcancel", evt => {
 
 colorpicker.addEventListener("click", evt => {
     active_color = evt.target.style.background
+})
+
+bg.addEventListener("click", evt => {
+    document.documentElement.style.background = evt.target.style.background
 })

@@ -18,12 +18,12 @@ canvas {
     flex-grow: 1;
 }
 
-#colorpicker {
+#colorpicker, #bg {
     display: grid;
     grid-auto-flow: column;
     list-style-type: none;
 }
 
-#colorpicker li {
+#colorpicker li, #bg li {
     height: 6vh;
 }
