@@ -131,7 +131,9 @@ class Line {
 }
 
 let active_line = null
+let active_touch_lines = new Map()
 let start, previous
+
 function render(ts) {
     start ??= ts
     const elapsed = ts - previous || 0
@@ -139,6 +141,7 @@ function render(ts) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     lines.forEach(line => line.moveWindowBy(elapsed).render())
     active_line?.render()
+    active_touch_lines.forEach(line => line.render())
 
     previous = ts
     requestAnimationFrame(render)
@@ -159,6 +162,49 @@ canvas.addEventListener("mouseup", _ => {
     active_line = null
 })
 
+canvas.addEventListener("touchstart", evt => {
+    evt.preventDefault()
+
+    const { timeStamp } = evt
+    for (let i = 0; i < evt.changedTouches.length; ++i) {
+        const { identifier, clientX, clientY } = evt.changedTouches.item(i)
+        const line = new Line()
+        line.addPoint({ clientX, clientY, timeStamp })
+
+        active_touch_lines.set(identifier, line)
+    }
+})
+canvas.addEventListener("touchmove", evt => {
+    evt.preventDefault()
+
+    const { timeStamp } = evt
+    for (let i = 0; i < evt.changedTouches.length; ++i) {
+        const { identifier, clientX, clientY } = evt.changedTouches.item(i)
+        const line = active_touch_lines.get(identifier)
+
+        line.addPoint({ clientX, clientY, timeStamp })
+    }
+})
+canvas.addEventListener("touchend", evt => {
+    evt.preventDefault()
+
+    for (let i = 0; i < evt.changedTouches.length; ++i) {
+        const { identifier } = evt.changedTouches.item(i)
+        const line = active_touch_lines.get(identifier)
+
+        line.finish()
+        lines.push(line)
+        active_touch_lines.delete(identifier)
+    }
+})
+canvas.addEventListener("touchcancel", evt => {
+    evt.preventDefault()
+    for (let i = 0; i < evt.changedTouches.length; ++i) {
+        const { identifier } = evt.changedTouches.item(i)
+        active_touch_lines.delete(identifier)
+    }
+})
+
 colorpicker.addEventListener("click", evt => {
-  active_color = evt.target.style.background
+    active_color = evt.target.style.background
 })
