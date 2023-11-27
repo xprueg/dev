@@ -1,11 +1,13 @@
 * {
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 html, body {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -20,10 +22,24 @@ canvas {
 
 #colorpicker, #bg {
     display: grid;
+    grid-auto-columns: minmax(0, 1fr);
     grid-auto-flow: column;
     list-style-type: none;
 }
 
 #colorpicker li, #bg li {
     height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+[data-active-fg]::before,
+[data-active-bg]::before {
+    content: "";
+    height: 3vh;
+    width: 3vh;
+    border-radius: 100%;
+    background: white;
+    mix-blend-mode: difference;
 }

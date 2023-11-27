@@ -157,8 +157,10 @@ canvas.addEventListener("mousemove", evt => {
     active_line?.addPoint(evt)
 })
 canvas.addEventListener("mouseup", _ => {
-    active_line.finish()
-    lines.push(active_line)
+    if (active_line) {
+        active_line.finish()
+        lines.push(active_line)
+    }
     active_line = null
 })
 
@@ -206,9 +208,13 @@ canvas.addEventListener("touchcancel", evt => {
 })
 
 colorpicker.addEventListener("click", evt => {
+    document.querySelector("[data-active-fg]").removeAttribute("data-active-fg")
+    evt.target.dataset.activeFg = true
     active_color = evt.target.style.background
 })
 
 bg.addEventListener("click", evt => {
+    document.querySelector("[data-active-bg]").removeAttribute("data-active-bg")
+    evt.target.dataset.activeBg = true
     document.documentElement.style.background = evt.target.style.background
 })
