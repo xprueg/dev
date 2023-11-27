@@ -1,8 +1,13 @@
 const ctx = canvas.getContext("2d")
 
 const scale = 4
-const ctxw = canvas.width = canvas.getBoundingClientRect().width / scale
-const ctxh = canvas.height = canvas.getBoundingClientRect().height / scale
+let ctxw = canvas.width = canvas.getBoundingClientRect().width / scale
+let ctxh = canvas.height = canvas.getBoundingClientRect().height / scale
+
+window.addEventListener("resize", _ => {
+    ctxw = canvas.width = canvas.getBoundingClientRect().width / scale
+    ctxh = canvas.height = canvas.getBoundingClientRect().height / scale
+})
 
 let active_color = "black"
 ctx.lineWidth = 2
