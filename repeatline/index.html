@@ -20,6 +20,11 @@
             <li style="background: magenta"></li>
             <li style="background: yellow"></li>
         </ol>
+        <script>
+            Array.prototype.at = function(i) {
+              return i === -1 ? this[this.length - 1] : this[i]
+            }
+        </script>
         <script type=module src=script.js></script>
     </body>
 </html>
