@@ -218,8 +218,19 @@ colorpicker.addEventListener("click", evt => {
     active_color = evt.target.style.background
 })
 
+function set_background_color(node) {
+    document.querySelector("[data-active-bg]")?.removeAttribute("data-active-bg")
+    node.dataset.activeBg = true
+    document.documentElement.style.background = node.style.background
+}
+
 bg.addEventListener("click", evt => {
-    document.querySelector("[data-active-bg]").removeAttribute("data-active-bg")
-    evt.target.dataset.activeBg = true
-    document.documentElement.style.background = evt.target.style.background
+    set_background_color(evt.target)
 })
+
+// TODO Set foreground color to something else than black if scheme is dark
+if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    set_background_color(document.querySelector("[data-bg=black]"))
+} else {
+    set_background_color(document.querySelector("[data-bg=white]"))
+}
