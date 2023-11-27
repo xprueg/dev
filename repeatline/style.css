@@ -44,7 +44,8 @@ canvas {
     mix-blend-mode: difference;
 }
 
-@media (orientation: landscape) {
+/* FIXME Handle the orientation switch also in the point coordinates */
+/* @media (orientation: landscape) {
     body {
         flex-direction: row;
     }
@@ -58,4 +59,4 @@ canvas {
         height: auto;
         width: 8vh;
     }
-}
+} */
