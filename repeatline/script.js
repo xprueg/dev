@@ -169,6 +169,9 @@ canvas.addEventListener("mouseup", _ => {
     active_line = null
 })
 
+document.addEventListener("touchstart", evt => {
+    evt.preventDefault()
+})
 canvas.addEventListener("touchstart", evt => {
     evt.preventDefault()
 
