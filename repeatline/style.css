@@ -28,6 +28,12 @@ canvas {
     list-style-type: none;
 }
 
+#colorpicker {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    list-style-type: none;
+}
+
 #colorpicker li, #bg li {
     height: 8vh;
     display: flex;
