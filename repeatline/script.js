@@ -215,10 +215,33 @@ canvas.addEventListener("touchcancel", evt => {
     }
 })
 
+function set_foreground_color(node) {
+    document.querySelector("[data-active-fg]")?.removeAttribute("data-active-fg")
+    node.dataset.activeFg = true
+
+    if ("colorpicker" in node.dataset) {
+        node.style.background = node.querySelector("input").value
+        active_color = node.querySelector("input").value
+    } else {
+        active_color = node.style.background
+    }
+}
+
 colorpicker.addEventListener("click", evt => {
-    document.querySelector("[data-active-fg]").removeAttribute("data-active-fg")
-    evt.target.dataset.activeFg = true
-    active_color = evt.target.style.background
+    if (evt.target instanceof HTMLInputElement)
+        return
+
+    if ("colorpicker" in evt.target.dataset) {
+        evt.target.querySelector("input").click()
+        document.querySelector("[data-active-fg]")?.removeAttribute("data-active-fg")
+        evt.target.dataset.activeFg = true
+    } else {
+        set_foreground_color(evt.target)
+    }
+})
+
+document.querySelector("[data-colorpicker]").addEventListener("change", evt => {
+    set_foreground_color(evt.currentTarget)
 })
 
 function set_background_color(node) {
