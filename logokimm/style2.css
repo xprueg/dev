@@ -1,0 +1,94 @@
+@font-face {
+  font-family: Geist;
+  src: url("fonts/GeistVF.woff2") format("woff2");
+  font-weight: 100 900;
+}
+
+strong {
+    font-weight: 200;
+}
+
+html {
+    font-weight: 400;
+
+    --padding: 1rem;
+    --sunshine: hsl(36.52, 100%, 95.49%);
+}
+
+:root {
+    --cap-height: 2048;
+    --ascent: 2728;
+    --descent: -680;
+    --line-gap: 0;
+    --units-per-em: 2816;
+    --x-height: 1536;
+}
+
+
+.capsize-xl-list {
+    padding-left: 1.5rem;
+}
+.capsize-xl-list li {
+    position: relative;
+}
+.capsize-xl-list li::before {
+    content: "●";
+    position: absolute;
+    left: -1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.4375rem;
+    margin-top: -.2889em;
+    transform: scale(.618);
+    transform-origin: left;
+}
+
+.capsize-xl {
+  font-size: 1.125rem;
+  line-height: 1.4375rem;
+}
+
+.capsize-xl::before {
+  content: "";
+  margin-bottom: -.2789em;
+  display: table;
+}
+
+.capsize-xl::after {
+  content: "";
+  margin-top: -0.2889em;
+  display: table;
+}
+
+.capsize-2xl {
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+}
+
+.capsize-2xl::before {
+  content: "";
+  margin-bottom: -.29em;
+  display: table;
+}
+
+.capsize-2xl::after {
+  content: "";
+  margin-top: -.3em;
+  display: table;
+}
+
+.capsize-2xl {
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+}
+
+.capsize-2xl::before {
+  content: "";
+  margin-bottom: -.29em;
+  display: table;
+}
+
+.capsize-2xl::after {
+  content: "";
+  margin-top: -.3em;
+  display: table;
+}
